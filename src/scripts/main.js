@@ -10,11 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let today = new Date;
 
     let clearInput = () => inputCity.value = ""
-    let clearIcons = () => icons.forEach(el => el.classList.toggle("d-none"))
+    let clearIcons = () => icons.forEach(el => el.classList.add("d-none"))
     let clearDetails = () => details.forEach(detail => detail.textContent = "") 
-    let clearMessage = (element) => element.textContent = ""
+    let clearMessage = () => message.textContent = ""
     let removeDnone = () => icons.forEach(icon => icon.classList.remove("d-none"))
-    let showMessage = (text, type)=>{message.textContent = text; message.className=""; message.classList.add(type)}
+    let showMessage = (text, type)=>{message.textContent = text; message.className=type;}
     let toggleLoader = () => loader.classList.toggle("d-none")
     let updateDetails = (response) => {
         itemList[0].textContent = `Location: ${response.name}`;
@@ -33,11 +33,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 toggleLoader()
                 setTimeout(function(){
                     let response = JSON.parse(xhttp.responseText);
-                    clearIcons()
-                    clearDetails()
-                    removeDnone(icons);
+                    clearIcons();
+                    clearDetails();
                     updateDetails(response)
-                    toggleLoader()
+                    removeDnone();
+                    toggleLoader();
                 }, 500)
             } 
             else if (xhttp.status === 404) {
@@ -58,8 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (btnBuscar) {
         btnBuscar.addEventListener("click", () => {
-            if (inputCity.value === "" || inputCity.value === null){
-                clearDetails()
+            if (inputCity.value.trim() === ""){
+                clearDetails();
                 clearIcons();
                 showMessage("Type a location", "text-warning")
             }
