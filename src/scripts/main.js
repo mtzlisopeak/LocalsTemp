@@ -2,16 +2,18 @@ document.addEventListener("DOMContentLoaded", () => {
     let inputCity = document.querySelector("#inputCidade");
     let btnBuscar = document.querySelector("#btnBuscar");
     let apiKey = "52eb3d56fe16f59e2fd9232cc7c52acf";
-    let details = document.querySelectorAll("#list li p");
     let itemList = document.querySelectorAll("#list li p");
     let icons = document.querySelectorAll("#list li i");
     let message = document.querySelector("#message");
     let loader = document.querySelector(".spinner-border")
     let today = new Date;
-
+    let disableButton = () => {
+        btnBuscar.disabled = true;
+        setTimeout( () => btnBuscar.disabled = false, 1500 )
+    }
     let clearInput = () => inputCity.value = ""
     let clearIcons = () => icons.forEach(el => el.classList.add("d-none"))
-    let clearDetails = () => details.forEach(detail => detail.textContent = "") 
+    let clearDetails = () => itemList.forEach(item => item.textContent = "") 
     let clearMessage = () => message.textContent = ""
     let removeDnone = () => icons.forEach(icon => icon.classList.remove("d-none"))
     let showMessage = (text, type)=>{message.textContent = text; message.className=type;}
@@ -64,7 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 showMessage("Type a location", "text-warning")
             }
             else {
-                makeRequisition();
+                disableButton()
+                makeRequisition()
             }
         });
     }
